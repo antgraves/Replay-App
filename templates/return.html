@@ -1,0 +1,14 @@
+<html>
+
+{% extends "head.html" %}
+{% block content %}
+<head>
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/thanks.css') }}">
+<link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:400,900|Inconsolata|Oswald">
+  </head>
+    &#10003; Thank you. Your response has been recorded.
+  <p id = "return">
+    Return <a href = "{{url_for('my_form')}}"> home</a></p>
+    {% endblock %}
+</html>

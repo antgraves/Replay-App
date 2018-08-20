@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+{% extends "head.html" %}
+{% block content %}
+<head>
+	
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+  
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+	<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/ind.css') }}">
+  <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Roboto:400,900|Inconsolata|Oswald|Lato">
+ 
+</head>
+
+
+<body >
+  <div id = 'top'>
+  <br>
+  <div id = 'load'>
+  Loading your playlist...</div>
+  <br>
+	<!-- <div class="progress" > -->
+		<!-- <div class="progress-bar progress-bar-striped progress-bar-warning active" role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" >
+			<span class="progress-bar-label">0%</span> -->
+      <div id="barContainer">
+  <div id="barMove">0%</div>
+  
+  </div>
+	 </div>
+   <span id = 'playlistname'> Your Playlist has found a new home!</span>
+	<div id = "click"> Click 
+  <a id = "url" target = "_blank"> here</a> to see your new playlist.</div>
+
+    <span class = 'disc' id = "spanonerror">Instead, click <button class = 'here' onclick = "appear()">here</button> to watch the videos on Replay</span>
+     <span class = 'disc' id = "spanwoerror"> Click <button class = 'here' onclick = "appear()">here</button> to watch the videos on Replay</span>
+<br>
+		<div id = "above"></div>
+		<ul id = "olist"></ul>
+      
+  <div id = "container"> 
+   <div id = 'info'> </div>
+    <div id = "counter"></div>
+     <div id='player'></div>
+   
+   <div id='image'><img id = "pict" /></div>
+   
+    <div id = 'buttons'><button class = 'control' id = 'prev' onclick = 'previous()'> &larr;     Previous</button>
+    <button class = 'control' id = 'next' onclick = "next()">Next &rarr;</button>
+  </div> </div>
+  </body>
+  <script type="text/javascript">
+  var bgcolor = '{{bottom|e}}';
+  var topdiv = '{{top|e}}';
+  //alert(typeof bgcolor);
+</script>
+  <script src = {{ url_for('static', filename='complete.js') }}></script>
+  <script src = {{ url_for('static', filename='appear.js') }}></script>
+   <script src = {{ url_for('static', filename='simple.js') }}></script>
+   {% endblock %}
+</html>

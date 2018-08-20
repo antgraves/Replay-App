@@ -1,0 +1,174 @@
+.progress{
+  margin: auto;
+  width: 55%;
+
+  
+  
+}
+
+#load{
+  text-align: center;
+  font-size: 2rem;
+}
+
+#above{
+  text-align: center;
+  font-size: 1.8rem;
+  padding: 2rem;
+
+  
+}
+
+ul {
+  font-family: 'Inconsolata', serif;
+  font-size: 1.8rem;
+  text-align: center;
+  list-style: none;
+  padding: 0.3rem;
+  visibility: hidden;
+}
+
+#playlistname {
+  display: block;
+  text-align: center;
+  padding-top: 3vh;
+  font-family: 'Roboto';
+  font-size: 2.8rem;
+  visibility: hidden;
+}
+
+#click {
+  font-family: 'Roboto';
+  font-size: 2.5rem;
+  text-align : center;
+  padding: 1rem;
+  visibility: hidden;
+  
+}
+#nameofpl {
+  font-family: 'Roboto';
+  font-size: 2.5rem;
+  text-align : center;
+  padding: 2rem;
+  visibility: hidden;
+  
+}
+
+#url:hover{
+  cursor: pointer;
+}
+
+.disc{
+  text-align: center;
+  margin: auto;
+  font-size:1.7rem;
+  display: block;
+  font-family: 'Roboto';
+  visibility: hidden;
+  
+}
+/*#spanonerror{
+  visibility: hidden;
+}
+#spanwoerror{
+  visibility: hidden;
+}*/
+
+#container {
+  overflow:hidden; 
+  visibility: hidden;
+}
+#info{
+  width: 100vw;
+  text-align:center;
+  font-family: "Oswald";
+  font-size: 3rem;
+}
+#counter{
+   width: 100vw;
+  text-align:center;
+  font-family: "Oswald";
+  font-size: 2rem;
+}
+#player{
+  width:60%;
+  /*padding: 2rem;*/
+  float: right;
+  height: 70vh;
+  /*width:58%;*/
+  padding-right: 2%;
+}
+#image{
+  float:left;
+  height: 80vh;
+    width: 40%;
+  padding-top: 5vh;
+}
+
+#pict{
+  width: 30vw;
+  height: 65vh;  
+  
+  display: block;
+  margin: 0 auto;
+  /*border: 0.5rem solid rgb(88, 135, 141, 0.6);*/
+  box-shadow: 0 0 10px black;
+}
+
+#buttons{
+float:right; 
+  height: 10vh;
+  border: none;
+  margin: 0 auto;
+  position:relative;
+  width:60%;
+}
+.control{
+  background-color: #202020;
+  color: white;
+  width: 10vw;
+  height:5vh;
+  font-size: 1.3vw;
+  border-radius: 1rem;
+  font-family: "Oswald", sans-serif;
+  text-align: center;
+  word-spacing: 0.8vw;
+}
+
+#prev{
+  left: 10vw;
+  margin: auto;
+  position: absolute;
+}
+#next{
+  left: 40vw;
+  position:absolute;
+  
+}
+#barContainer {
+  width: 40%;
+  background-color: rgb(237, 226, 201);
+   display:block;
+  margin: 0 auto;
+  border-radius: 4rem;
+}
+
+#barMove {
+  width: 0%;
+  height: 2.2rem;
+  background-color: rgb(247, 178, 59);
+  text-align: center;
+  line-height: 2.2rem;
+  color: white;
+  display:block;
+  border-radius: 4rem;
+  font-family: "Lato";
+}
+.here{
+  border: none;
+  color: blue;
+  font-size: 2rem;
+}
+li{
+  margin: 2rem 0;
+}

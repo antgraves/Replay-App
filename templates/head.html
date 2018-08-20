@@ -1,0 +1,20 @@
+<html>
+ <link href="https://fonts.googleapis.com/css?family=Crete+Round:400,400i" rel="stylesheet">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/head.css') }}">
+  <header>
+   
+    <div class = "fix">
+      <a href="{{url_for('my_form')}}">
+    <div id = "leftbox">Home</div> </a>
+
+    <div id = "centbox"><a href="{{url_for('my_form')}}"><img src = "{{url_for('static', filename='replay.png')}}" id = "replay"> </a></div>
+<a href="{{url_for('report')}}">
+    <div id = "rightbox">Report an issue</div></a>
+      <br style="clear: left;" />
+    </div>
+   
+  </header>
+
+
+  {% block content %}{% endblock %}
+</html>
