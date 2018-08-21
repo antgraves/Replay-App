@@ -48,10 +48,10 @@ SHOW_DIALOG_str = "true"
 
 # os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
-@bp.route('/')
-def my_form():
+# @bp.route('/')
+# def my_form():
 	
-	return render_template("test.html")
+# 	return render_template("test.html")
 
 @bp.route('/', methods=['POST'])
 def my_form_post():
