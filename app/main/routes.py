@@ -74,7 +74,7 @@ def my_form_post():
 			session['bottom'] = request.form.get('bottom')
 	      
 	    # if formboy.bottom == 'spotify':
-		if session['bottom']:
+		if 'bottom' in session:
 			print(session['bottom'])
 		if current_app.config['bottom'] == 'spotify':
 			auth_query_parameters = {
