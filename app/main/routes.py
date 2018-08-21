@@ -58,6 +58,7 @@ def my_form_post():
   
 	current_app.config['url'] = request.form['url']
 	session['url'] = request.form['url']
+	print(request.form)
 	if request.method == "POST":
 		
 		if request.form.get('top') is not None:
@@ -71,7 +72,8 @@ def my_form_post():
 			session['bottom'] = request.form.get('bottom')
 	      
 	    # if formboy.bottom == 'spotify':
-		print(session['bottom'])
+		if session['bottom']:
+			print(session['bottom'])
 		if current_app.config['bottom'] == 'spotify':
 			auth_query_parameters = {
    				"response_type": "code",
