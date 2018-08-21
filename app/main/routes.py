@@ -55,13 +55,12 @@ def my_form():
 
 @bp.route('/', methods=['POST'])
 def my_form_post():
-  
-	current_app.config['url'] = request.form['url']
-	session['url'] = request.form['url']
-	print(request.form)
-	print(current_app.config)
+	
 	if request.method == "POST":
-		
+		current_app.config['url'] = request.form['url']
+		session['url'] = request.form['url']
+		print(request.form)
+		print(current_app.config)
 		if request.form.get('top') is not None:
 	      # formboy.top = request.form.get('top')
 			print('yaboi')
@@ -76,7 +75,7 @@ def my_form_post():
 	      
 	    # if formboy.bottom == 'spotify':
 		if 'bottom' in current_app.config:
-			print(session['bottom'])
+			print('tom')
 		# if 'bottom' in current_app.config:
 			if current_app.config['bottom'] == 'spotify':
 				auth_query_parameters = {
@@ -93,17 +92,19 @@ def my_form_post():
 
 	    # if formboy.bottom == 'tidal':
 			if current_app.config['bottom'] == 'tidal':
+				print('btom')
 				return redirect(url_for('main.tidal_auth'))
 
 	    #if formboy.bottom == 'youtub':
 			if current_app.config['bottom'] == 'youtub':
+				print('botmam')
 				return redirect('/authorize')
 	
 	return redirect(url_for('main.my_form'))
 
 @bp.route('/auth')
 def tidal_auth():
-	
+	print(current_app.config)
 	return render_template('tidal.html')
 
 @bp.route('/auth', methods=['GET','POST'])
@@ -113,6 +114,7 @@ def tidal_auth_post():
 		
 		current_app.config['username'] = request.form['username']
 		current_app.config['password'] = request.form['password']
+		print(current_app.config)
 		return redirect(url_for('main.final'))
 
 	return render_template('tidal.html')
@@ -142,6 +144,7 @@ def callback():
 @bp.route('/complete')
 def final():
   #return render_template('ind.html', bottom = formboy.bottom, top = formboy.top)
+	print(current_app.config)
 	return render_template('ind.html', bottom = current_app.config['bottom'], top = current_app.config['top'])
 
 @bp.route('/progress')
