@@ -98,8 +98,8 @@ def my_form_post():
     #if formboy.bottom == 'youtub':
 		if current_app.config['bottom'] == 'youtub':
 			return redirect('/authorize')
-	
-	return redirect(url_for('main.my_form'))
+	return render_template("test.html")
+	#return redirect(url_for('main.my_form'))
 
 @bp.route('/auth')
 def tidal_auth():
