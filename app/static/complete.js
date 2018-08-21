@@ -15,8 +15,7 @@
 	var click = document.getElementById('click');
 	var innerH = document.getElementById('container').innerHTML;
 	document.getElementById('container').innerHTML = "";
-	console.log(bgcolor);
-	console.log(topdiv);
+	
 
 	if (bgcolor == "spotify"){
 		document.getElementById('above').style.backgroundColor = "#ddf9cf";
@@ -96,7 +95,8 @@
 	}
 	source.onmessage = function(event) {
 		//console.log(event.data);
-
+		console.log(bgcolor);
+		console.log(topdiv);
 		if (event.data.substring(0,4) == "SONG"){
 			namelist.push(event.data.substring(4));
 		}
