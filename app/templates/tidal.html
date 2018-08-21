@@ -1,0 +1,25 @@
+<html>
+{% extends "head.html" %}
+{% block content %}
+<head>
+   <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Oswald|Poppins">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/tidal.css') }}">
+  </head>
+  <body><p id = 'top'>
+Please complete the following. Your Tidal username and password are required and the playlist's songs will be added under "My Music".</p>
+  <form action="" method="POST"><div class = "form">
+    <p id = "tidal">Tidal</p>
+    <p><label for="username" >Username: </label>
+      <input id="username" type="text" name = "username" required></p><p>
+  <label for="userPassword">Password: </label>
+    <input id="userPassword" type="password" name = "password" required></p>
+<input type="submit" value="Submit" id = 'submit'>
+    </div>
+  
+  </form>
+  <span id ="bottomdis">
+      Currently, Replay does not allow Tidal users to sign in via Facebook or Twitter accounts.</span>
+  </body>
+  {% endblock %}
+</html>

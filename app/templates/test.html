@@ -1,0 +1,96 @@
+<!-- <iframe width="560" height="315" src="https://youtu.be/DzwkcbTQ7ZE" frameborder="0" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.ssl.youtube.com/embed/oGpFcHTxjZs?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<div class="frame"><iframe allowfullscreen src="https://directlyrics-net.global.ssl.fastly.net/yt.html#id=2CHdfTVYdv0&origin=https://www.directlyrics.com?autoplay=1" frameborder="0" class="youtube player show"></iframe>
+
+<iframe width="560" height="315" src="http://www.youtube.com/embed/tvTRZJ-4EyI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/oGpFcHTxjZs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/pk8k7_-Ffv0?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<iframe id="ytapiplayer" frameborder="0" allowfullscreen="1" allow="autoplay; encrypted-media" title="YouTube video player" width="640" height="390" src="https://www.youtube.com/embed/tvTRZJ-4EyI?enablejsapi=1&origin=http%3A%2F%2Fwww.yvoschaap.com&widgetid=1"></iframe>
+
+<iframe width="300" height="200" src="www.youtube.com/embed/tvTRZJ-4EyI?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
+ -->
+<!DOCTYPE html>
+<html>
+{% extends "head.html" %}
+{% block content %}
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/front.css') }}">
+<link href="https://fonts.googleapis.com/css?family=Andika|Athiti" rel="stylesheet">
+<head></head>
+<div id = "pls" >
+   <span id = "welcome">  Welcome to Replay!</span> <br><span id = 'hereyou'>Here you can transfer playlists among popular streaming services. </span> </div>
+  <br>
+<p class = "instruct">
+  First, please select the origin of the playlist:  </p>
+     </div>
+<form action="" method="POST" id = "form">
+    <div class = "clearfix">
+    	<div class = "butgroup">
+    		<button class = "buttonup" id = "spotify" type = "button" name = "spotify"> <img src = "{{url_for('static', filename='spotlogo.png')}}" id = "spotlogo"> </button> 
+    	</div>
+    	<div class = "butgroup">
+        	<button class = "buttonup" id = "apple" type = "button" name = "apple"> <img src = "{{url_for('static', filename='apple-music.png')}}" id = "spotlogo"> </button>
+        </div>
+        <div class = "butgroup">
+			<button class = "buttonup" id = "tidal"type = "button"name = "tidal"> <img src = "{{url_for('static', filename='tidal.png')}}" id = "spotlogo"></button> 
+      	</div>
+  	</div>
+  	<br> 
+  	<div id = "urltext"><p class = "instruct">Enter the playlist url here:</p> 
+    <input class = "input" type="text" name="url" id = 'url'></div>
+    <p>
+    <div class = 'error' id = 'error'></div></p>
+    
+  	<br>
+	<p id = "outputtext" class = "instruct">Select the destination of the playlist:</p>
+	<div class = "clearfix">
+    <div class = "butgroup">
+    	<button class = "buttondown" id = "spotify2"type = "button" > <img src = "{{url_for('static', filename='spotlogo.png')}}" ></button> 
+    </div>
+    <div class = "butgroup">
+        <button class = "buttondown" id = "youtube" type = "button"> <img src = "{{url_for('static', filename='youtube.png')}}" id = "spotlogo"> </button>
+    </div>
+    <div class = "butgroup">
+		<button class = "buttondown" id = "tidal2" type = "button"> <img src = "{{url_for('static', filename='tidal.png')}}" > </button> 
+    </div>
+  	</div>
+    <br><br>
+    <div class = "bottom">
+      	<input type = "submit" class = "submit" id = "submit" value = "Submit">  
+        <span id = "youwill"> &nbsp; &nbsp; &nbsp; You will be redirected to a login page. </span>
+    </div>
+    <!-- <select name = "sel">
+  <option value="volvo">Volvo</option>
+  <option value="saab">Saab</option>
+  <option value="mercedes">Mercedes</option>
+  <option value="audi">Audi</option>
+</select> -->
+  	</form>
+    <br>
+<br>
+<br>
+<br>
+<br><div id = "disclaimer">
+                  *At the moment, Replay does not allow for playlist conversion to Apple Music.</div>
+<!-- <script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+<script type=text/javascript src="{{
+  url_for('static', filename='jquery.js') }}"></script> -->
+  
+  <script type="text/javascript">
+  	var url = {{ url_for('main.my_form_post')|tojson }};
+  </script>
+
+
+<script src={{ url_for('static', filename='test.js') }}></script>
+{% endblock %}
+</html>
+
+
+

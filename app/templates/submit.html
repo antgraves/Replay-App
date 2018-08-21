@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2 id = "this"></h2>
+
+<p id="demo">{{ "Song 1/" ~ output['Tracks']|length }}</p>
+
+<button type="button" onclick="previous()">Previous</button>
+
+<img id = 'thepic' src = {{ output['Images'][0] }} >
+
+<div id='player'></div>
+
+<button type="button" onclick="next()">Next</button>
+
+<p>
+	<form action="" method="POST">
+		<!-- <button type="button">Click here to generate a link to this playlist</button> -->
+       <!--  <input type="text" name="text1"> -->
+        <input type="submit" name="my-form" value="Click here to generate a link to this playlist ">
+
+ <!-- {{output|tojson}} -->
+ {{link}}
+</p>
+
+
+
+</body>
+<script>
+	var outputIDs = {{ output['IDs']|tojson }};
+	var len = outputIDs.length;
+	var outputImages = {{ output['Images']|tojson }};
+	var outputTracks = {{ output['Tracks']|tojson }};
+	var str = outputTracks[0];
+	var sub = str.substring(str.indexOf(" |Artist|: ") + 11) + " - " + str.substring(str.indexOf(" |Track|: ") + 10, str.indexOf(" |Artist|: "));
+	window.onload = function(){
+    document.getElementById('this').innerHTML = sub;
+};
+</script>
+<script src={{ url_for('static', filename='simple.js') }}></script>
+
+</html>
+

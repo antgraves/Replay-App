@@ -1,0 +1,15 @@
+<html>
+{% extends "head.html" %}
+{% block content %}
+  <link href="https://fonts.googleapis.com/css?family=Cabin|Jua" rel="stylesheet">
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/error.css') }}">
+  <div>
+  <span id = 'ohno'> Error!</span> 
+    <img src = "https://thumbs.gfycat.com/PeacefulVainEquestrian-size_restricted.gif">
+    <span> Actually, it's 404.
+    <br>
+      <br>
+  <span id = "startover">Start over  <a href="{{url_for('main.my_form')}}"> here</a>, or report the problem <a href="{{url_for('main.report')}}"> here</a>. <span>
+  <div>
+  	{% endblock %}
+</html>
