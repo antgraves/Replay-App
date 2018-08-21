@@ -42,7 +42,7 @@ SHOW_DIALOG_str = "true"
 
 
 
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+# os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 @bp.route('/')
 def my_form():
