@@ -59,6 +59,7 @@ def my_form_post():
 	current_app.config['url'] = request.form['url']
 	session['url'] = request.form['url']
 	print(request.form)
+	print(current_app.config)
 	if request.method == "POST":
 		
 		if request.form.get('top') is not None:
@@ -85,7 +86,7 @@ def my_form_post():
     			# "state": STATE,
     			"show_dialog": SHOW_DIALOG_str,
     			"client_id": current_app.config['CLIENT_ID']}
-    			
+
 			url_args = "&".join(["{}={}".format(key,urllib.parse.quote(val)) for key,val in auth_query_parameters.items()])
 			auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
 			return redirect(auth_url)
