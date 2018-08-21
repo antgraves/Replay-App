@@ -15,6 +15,8 @@
 	var click = document.getElementById('click');
 	var innerH = document.getElementById('container').innerHTML;
 	document.getElementById('container').innerHTML = "";
+	console.log(bgcolor);
+	console.log(topdiv);
 
 	if (bgcolor == "spotify"){
 		document.getElementById('above').style.backgroundColor = "#ddf9cf";
@@ -102,7 +104,7 @@
 			imageurls.push(event.data.substring(5));
 		}
 		else if(event.data.substring(0,5) == "COLOR"){
-			console.log(event.data.substring(5));
+			//console.log(event.data.substring(5));
 			coloravgs.push(event.data.substring(5));
 		}
 		else if(event.data.substring(0,3) == "IDS"){

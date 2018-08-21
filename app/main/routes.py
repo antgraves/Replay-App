@@ -35,7 +35,10 @@ SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, SPOTIFY_API_VERSION)
 # CLIENT_SIDE_URL = "http://localhost"
 # PORT = 8090
 SOURCE_URL = 'https://replaylist-app.herokuapp.com'
-REDIRECT_URI = "%s/callback/q" % SOURCE_URL
+# REDIRECT_URI = "%s/callback/q" % SOURCE_URL
+CLIENT_SIDE_URL = "http://localhost"
+PORT = 8090
+REDIRECT_URI = "{}:{}/callback/q".format(CLIENT_SIDE_URL, PORT)
 SCOPE = "playlist-modify-public playlist-modify-private"
 STATE = ""
 SHOW_DIALOG_str = "true"
@@ -209,9 +212,11 @@ def oauth2callback():
 	authorization_response = request.url
 	
 	try:
+		print('there')
 		flow.fetch_token(authorization_response=authorization_response)
 		
 	except:
+		print('here')
 		return render_template('error.html')
 
 	
