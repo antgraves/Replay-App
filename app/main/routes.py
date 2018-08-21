@@ -32,9 +32,10 @@ SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, SPOTIFY_API_VERSION)
 
 
 # Server-side Parameters
-CLIENT_SIDE_URL = "http://localhost"
-PORT = 8090
-REDIRECT_URI = "{}:{}/callback/q".format(CLIENT_SIDE_URL, PORT)
+# CLIENT_SIDE_URL = "http://localhost"
+# PORT = 8090
+SOURCE_URL = 'https://replaylist-app.herokuapp.com/'
+REDIRECT_URI = "%s/callback/q" % 
 SCOPE = "playlist-modify-public playlist-modify-private"
 STATE = ""
 SHOW_DIALOG_str = "true"
