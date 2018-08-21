@@ -63,11 +63,13 @@ def my_form_post():
 		
 		if request.form.get('top') is not None:
 	      # formboy.top = request.form.get('top')
+			print('yaboi')
 			current_app.config['top'] = request.form.get('top')
 			session['top'] = request.form.get('top')
 
 		if request.form.get('bottom') is not None:
 	      #formboy.bottom = request.form.get('bottom')
+			print('yabi')
 			current_app.config['bottom'] = request.form.get('bottom')
 			session['bottom'] = request.form.get('bottom')
 	      
