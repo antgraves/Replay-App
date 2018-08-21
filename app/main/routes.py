@@ -222,14 +222,12 @@ def oauth2callback():
 	
 	try:
 		print('there')
-		print(current_app.config['top'])
-		print(current_app.config['bottom'])
+		print(current_app.config)
 		flow.fetch_token(authorization_response=authorization_response)
 		
 	except:
 		print('here')
-		print(current_app.config['top'])
-		print(current_app.config['bottom'])
+		print(current_app.config)
 		return render_template('error.html')
 
 	
