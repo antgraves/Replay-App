@@ -48,12 +48,12 @@ SHOW_DIALOG_str = "true"
 
 # os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
-# @bp.route('/')
-# def my_form():
+@bp.route('/')
+def my_form():
 	
-# 	return render_template("test.html")
+	return render_template("test.html")
 
-@bp.route('/', methods=['GET','POST'])
+@bp.route('/', methods=['POST'])
 def my_form_post():
   
 	current_app.config['url'] = request.form['url']
@@ -75,31 +75,31 @@ def my_form_post():
 			session['bottom'] = request.form.get('bottom')
 	      
 	    # if formboy.bottom == 'spotify':
-		if 'bottom' in session:
+		if 'bottom' in current_app.config:
 			print(session['bottom'])
 		# if 'bottom' in current_app.config:
-		if current_app.config['bottom'] == 'spotify':
-			auth_query_parameters = {
-   				"response_type": "code",
-    			"redirect_uri": REDIRECT_URI,
-    			"scope": SCOPE,
-    			# "state": STATE,
-    			"show_dialog": SHOW_DIALOG_str,
-    			"client_id": current_app.config['CLIENT_ID']}
+			if current_app.config['bottom'] == 'spotify':
+				auth_query_parameters = {
+	   				"response_type": "code",
+	    			"redirect_uri": REDIRECT_URI,
+	    			"scope": SCOPE,
+	    			# "state": STATE,
+	    			"show_dialog": SHOW_DIALOG_str,
+	    			"client_id": current_app.config['CLIENT_ID']}
 
-			url_args = "&".join(["{}={}".format(key,urllib.parse.quote(val)) for key,val in auth_query_parameters.items()])
-			auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
-			return redirect(auth_url)
+				url_args = "&".join(["{}={}".format(key,urllib.parse.quote(val)) for key,val in auth_query_parameters.items()])
+				auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
+				return redirect(auth_url)
 
-    # if formboy.bottom == 'tidal':
-		if current_app.config['bottom'] == 'tidal':
-			return redirect(url_for('main.tidal_auth'))
+	    # if formboy.bottom == 'tidal':
+			if current_app.config['bottom'] == 'tidal':
+				return redirect(url_for('main.tidal_auth'))
 
-    #if formboy.bottom == 'youtub':
-		if current_app.config['bottom'] == 'youtub':
-			return redirect('/authorize')
-	return render_template("test.html")
-	#return redirect(url_for('main.my_form'))
+	    #if formboy.bottom == 'youtub':
+			if current_app.config['bottom'] == 'youtub':
+				return redirect('/authorize')
+	
+	return redirect(url_for('main.my_form'))
 
 @bp.route('/auth')
 def tidal_auth():
