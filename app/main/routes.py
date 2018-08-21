@@ -57,16 +57,18 @@ def my_form():
 def my_form_post():
   
 	current_app.config['url'] = request.form['url']
-  
+  	# session['url'] = request.form['url']
 	if request.method == "POST":
 		
 		if request.form.get('top') is not None:
 	      # formboy.top = request.form.get('top')
 			current_app.config['top'] = request.form.get('top')
+			# session['top'] = request.form.get('top')
 
 		if request.form.get('bottom') is not None:
 	      #formboy.bottom = request.form.get('bottom')
 			current_app.config['bottom'] = request.form.get('bottom')
+			# session['bottom'] = request.form.get('bottom')
 	      
 	    # if formboy.bottom == 'spotify':
 		if current_app.config['bottom'] == 'spotify':
@@ -213,10 +215,14 @@ def oauth2callback():
 	
 	try:
 		print('there')
+		print(current_app.config['top'])
+		print(current_app.config['bottom'])
 		flow.fetch_token(authorization_response=authorization_response)
 		
 	except:
 		print('here')
+		print(current_app.config['top'])
+		print(current_app.config['bottom'])
 		return render_template('error.html')
 
 	
