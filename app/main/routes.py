@@ -53,7 +53,7 @@ SHOW_DIALOG_str = "true"
 	
 # 	return render_template("test.html")
 
-@bp.route('/', methods=['POST'])
+@bp.route('/', methods=['GET','POST'])
 def my_form_post():
   
 	current_app.config['url'] = request.form['url']
