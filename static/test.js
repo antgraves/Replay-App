@@ -6,20 +6,42 @@ var bottomone;
 function buttonpush(id, buttons){
   for (var j = 0; j < 3; j++){
     if(id == buttons[j].id){
-    document.getElementById(buttons[j].id).style.filter = "brightness(70%)";
+
+ document.getElementById(buttons[j].id).style.outline = "0.2rem solid blue";
+
+      if(id == 'spotify' || id == 'spotify2'){
+  document.getElementById(buttons[j].id).style.backgroundColor = "rgb(0, 168, 73)";
+        
+      }
+      else if(id == 'tidal' || id == 'tidal2'){
+        document.getElementById(buttons[j].id).style.backgroundColor = "black";
+        
+      }
+       else if(id == 'youtube'){
+         document.getElementById(buttons[j].id).style.backgroundColor = "rgb(196,0,0)";
+       }
+      else if (id == 'apple'){
+        document.getElementById(buttons[j].id).style.background = "linear-gradient(to right, rgb(115,0,180), rgb(192,0,78))";
+      }
       if(buttons == topbuttons){
+        
         data.set("top",buttons[j].id );
         topone = buttons[j].id;
-        // alert(data.get('bottom'));
+        
       }
       else {
+        
         data.set("bottom",buttons[j].id.substring(0,buttons[j].id.length - 1) );
         bottomone = buttons[j].id.substring(0,buttons[j].id.length - 1);
       }
       // alert("I am button " + buttons[j].id)
     }
     
-    else{     document.getElementById(buttons[j].id).style.filter = null;
+    else{   
+      document.getElementById(buttons[j].id).style.backgroundColor = null;
+    document.getElementById(buttons[j].id).style.outline = null;
+         document.getElementById(buttons[j].id).style.background = null;
+              
     } }
   }
 for (var i=0 ; i < topbuttons.length ; i++){
@@ -81,7 +103,7 @@ function errCheck(){
     return "Select a service from below"
   }
   if (top == bottom ){
-    return "Select two different options";
+    return "Select two different services";
   }
   
   return retstring;
