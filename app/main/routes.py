@@ -35,10 +35,10 @@ SPOTIFY_API_URL = "{}/{}".format(SPOTIFY_API_BASE_URL, SPOTIFY_API_VERSION)
 # CLIENT_SIDE_URL = "http://localhost"
 # PORT = 8090
 SOURCE_URL = 'https://replaylist-app.herokuapp.com'
-# REDIRECT_URI = "%s/callback/q" % SOURCE_URL
-CLIENT_SIDE_URL = "http://localhost"
-PORT = 8090
-REDIRECT_URI = "{}:{}/callback/q".format(CLIENT_SIDE_URL, PORT)
+REDIRECT_URI = "%s/callback/q" % SOURCE_URL
+# CLIENT_SIDE_URL = "http://localhost"
+# PORT = 8090
+# REDIRECT_URI = "{}:{}/callback/q".format(CLIENT_SIDE_URL, PORT)
 SCOPE = "playlist-modify-public playlist-modify-private"
 STATE = ""
 SHOW_DIALOG_str = "true"
@@ -46,7 +46,7 @@ SHOW_DIALOG_str = "true"
 
 
 
-os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+# os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 @bp.route('/')
 def my_form():
