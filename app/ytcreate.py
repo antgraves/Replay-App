@@ -85,42 +85,42 @@ def playlist_items_insert(client, properties, **kwargs):
 
 
     
-def add_playlist(youtube, pl):
+# def add_playlist(youtube, pl):
   
-  body = dict(
-    snippet=dict(
-      title=pl['Name'],
-      description=pl['Description']
-    ),
-    status=dict(
-      privacyStatus='public'
-    ) 
-  ) 
+#   body = dict(
+#     snippet=dict(
+#       title=pl['Name'],
+#       description=pl['Description']
+#     ),
+#     status=dict(
+#       privacyStatus='public'
+#     ) 
+#   ) 
     
-  playlists_insert_response = youtube.playlists().insert(
-    part='snippet,status',
-    body=body
-  ).execute()
+#   playlists_insert_response = youtube.playlists().insert(
+#     part='snippet,status',
+#     body=body
+#   ).execute()
 
-  yield "data:75\n\n"
-  idlength = len(pl['IDs'])
-  for item in pl['IDs']:
-    playlist_items_insert(youtube,{'snippet.playlistId': playlists_insert_response['id'],
-         'snippet.resourceId.kind': 'youtube#video',
-         'snippet.resourceId.videoId': item,
-         'snippet.position': ''},
-        part='snippet',
-        onBehalfOfContentOwner='')
+#   yield "data:75\n\n"
+#   idlength = len(pl['IDs'])
+#   for item in pl['IDs']:
+#     playlist_items_insert(youtube,{'snippet.playlistId': playlists_insert_response['id'],
+#          'snippet.resourceId.kind': 'youtube#video',
+#          'snippet.resourceId.videoId': item,
+#          'snippet.position': ''},
+#         part='snippet',
+#         onBehalfOfContentOwner='')
 
-    exactpercent = ((25) / idlength) + exactpercent
-    displaypercent = int(exactpercent)
-    if displaypercent > 100:
-      displaypercent = 100
-    yield "data:" +str(displaypercent) + "\n\n" 
+#     exactpercent = ((25) / idlength) + exactpercent
+#     displaypercent = int(exactpercent)
+#     if displaypercent > 100:
+#       displaypercent = 100
+#     yield "data:" +str(displaypercent) + "\n\n" 
 
-  yield "data:100\n\n"
+#   yield "data:100\n\n"
 
-  return playlists_insert_response['id']
+#   return playlists_insert_response['id']
 
 
 
@@ -172,11 +172,20 @@ def get_playlist_dict(youtube, url, service):
     artistname = item[(item.find('|Artist|:') + 10):item.find(' |URL|:')]
     trackname = item[(item.find('|Track|:') + 9):item.find(' |Artist|:')] 
     query = trackname + " " + artistname 
-    yield "data:SONG" + artistname + " - " + trackname + "\n\n"
+    
     #query = item[(item.find('|Track|:') + 9):item.find('|Artist|:')] + item[(item.find('|Artist|:') + 10):]
     payload = {'type': 'video', 'q': (query +' ' + 'video')  ,'key' : 'AIzaSyCzW8ySMW-rvjItMk9s-RbIk4p2DeGZooU','maxResults': 1 , 'part' : 'snippet' }
     r = requests.get('https://www.googleapis.com/youtube/v3/search', params = payload )
-    retdict['IDs'].append(r.json()['items'][0]['id']['videoId'])
+    # print('we here')
+    # print()
+    # print(r.json())
+
+    if len(r.json()['items']) > 0:
+      retdict['IDs'].append(r.json()['items'][0]['id']['videoId'])
+      yield "data:SONG" + artistname + " - " + trackname + "\n\n"
+    else:
+      retdict['IDs'].append('')
+      retdict['Images'][len(retdict['IDs']) - 1] = ""
     exactpercent = ((50) / length) + exactpercent
     displaypercent = int(exactpercent)
     if displaypercent > 70:
@@ -195,6 +204,7 @@ def get_playlist_dict(youtube, url, service):
   ) 
   colordict = {}
   for item in retdict['Images']:
+    if len(item) > 0:
       yield "data:IMAGE" + item + "\n\n"
       if item in colordict:
         yield "data:COLOR" + colordict[item] + "\n\n"
@@ -207,6 +217,7 @@ def get_playlist_dict(youtube, url, service):
   #ls = ['[' + str(len(retdict['IDs'])), retdict['IDs'], retdict['Name']]
 
   for item in retdict['IDs']:
+    if len(item) > 0:
       yield "data:IDS" + str(item) + "\n\n"
 
   yield "data:NAME" + retdict['Name'] + "\n\n"
