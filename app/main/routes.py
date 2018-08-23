@@ -62,7 +62,7 @@ def my_form_post():
 		session['url'] = request.form['url']
 		session['top'] = request.form['top']
 		session['bottom'] = request.form['bottom']
-		print(current_app.config)
+		# print(current_app.config)
 		# if request.form.get('top') is not None:
 	 #      # formboy.top = request.form.get('top')
 		# 	print('yaboi')
