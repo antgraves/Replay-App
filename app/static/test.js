@@ -26,13 +26,13 @@ function buttonpush(id, buttons){
       if(buttons == topbuttons){
         
         data.set("top",buttons[j].id );
-        topone = buttons[j].id;
+        document.getElementById('top').value =buttons[j].id; 
        
       }
       else {
         
         data.set("bottom",buttons[j].id.substring(0,buttons[j].id.length - 1) );
-        bottomone = buttons[j].id.substring(0,buttons[j].id.length - 1);
+        document.getElementById('bottom').value =buttons[j].id.substring(0,buttons[j].id.length - 1) ; 
         
       }
       // alert("I am button " + buttons[j].id)
@@ -66,13 +66,13 @@ function addSubmit(ev) {
   document.getElementById('error').innerHTML = errpresent;
   }
    
-      var request = new XMLHttpRequest();
-      // request.addEventListener('load', consolee);
-      request.open('POST', url);
-      sd = new FormData(this);
-      sd.set("top", topone);
-      sd.set("bottom", bottomone);
-      request.send(sd);
+      // var request = new XMLHttpRequest();
+      // // request.addEventListener('load', consolee);
+      // request.open('POST', url);
+      // sd = new FormData(this);
+      // sd.set("top", topone);
+      // sd.set("bottom", bottomone);
+      // request.send(sd);
       // request.send(data);
       // console.log('submitted');
     }

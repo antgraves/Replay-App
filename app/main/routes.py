@@ -50,55 +50,57 @@ os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 @bp.route('/')
 def my_form():
-	session.clear()
+	# session.clear()
 	return render_template("test.html")
 
 @bp.route('/', methods=['POST'])
 def my_form_post():
 	
 	if request.method == "POST":
-		current_app.config['url'] = request.form['url']
-		session['url'] = request.form['url']
+		#current_app.config['url'] = request.form['url']
 		print(request.form)
+		session['url'] = request.form['url']
+		session['top'] = request.form['top']
+		session['bottom'] = request.form['bottom']
 		print(current_app.config)
-		if request.form.get('top') is not None:
-	      # formboy.top = request.form.get('top')
-			print('yaboi')
-			current_app.config['top'] = request.form.get('top')
-			session['top'] = request.form.get('top')
+		# if request.form.get('top') is not None:
+	 #      # formboy.top = request.form.get('top')
+		# 	print('yaboi')
+		# 	current_app.config['top'] = request.form.get('top')
+		# 	session['top'] = request.form.get('top')
 
-		if request.form.get('bottom') is not None:
-	      #formboy.bottom = request.form.get('bottom')
-			print('yabi')
-			current_app.config['bottom'] = request.form.get('bottom')
-			session['bottom'] = request.form.get('bottom')
+		# if request.form.get('bottom') is not None:
+	 #      #formboy.bottom = request.form.get('bottom')
+		# 	print('yabi')
+		# 	current_app.config['bottom'] = request.form.get('bottom')
+		# 	session['bottom'] = request.form.get('bottom')
 	      
 	    # if formboy.bottom == 'spotify':
-		if 'bottom' in current_app.config:
-			print('tom')
 		# if 'bottom' in current_app.config:
-			if current_app.config['bottom'] == 'spotify':
-				auth_query_parameters = {
-	   				"response_type": "code",
-	    			"redirect_uri": REDIRECT_URI,
-	    			"scope": SCOPE,
-	    			# "state": STATE,
-	    			"show_dialog": SHOW_DIALOG_str,
-	    			"client_id": current_app.config['CLIENT_ID']}
+		# 	print('tom')
+		# if 'bottom' in current_app.config:
+		if session['bottom'] == 'spotify':
+			auth_query_parameters = {
+   				"response_type": "code",
+    			"redirect_uri": REDIRECT_URI,
+    			"scope": SCOPE,
+    			# "state": STATE,
+    			"show_dialog": SHOW_DIALOG_str,
+    			"client_id": current_app.config['CLIENT_ID']}
 
-				url_args = "&".join(["{}={}".format(key,urllib.parse.quote(val)) for key,val in auth_query_parameters.items()])
-				auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
-				return redirect(auth_url)
+			url_args = "&".join(["{}={}".format(key,urllib.parse.quote(val)) for key,val in auth_query_parameters.items()])
+			auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
+			return redirect(auth_url)
 
-	    # if formboy.bottom == 'tidal':
-			if current_app.config['bottom'] == 'tidal':
-				print('btom')
-				return redirect(url_for('main.tidal_auth'))
+    # if formboy.bottom == 'tidal':
+		if session['bottom'] == 'tidal':
+			print('btom')
+			return redirect(url_for('main.tidal_auth'))
 
-	    #if formboy.bottom == 'youtub':
-			if current_app.config['bottom'] == 'youtub':
-				print('botmam')
-				return redirect('/authorize')
+    #if formboy.bottom == 'youtub':
+		if session['bottom'] == 'youtub':
+			print('botmam')
+			return redirect('/authorize')
 				# return redirect(url_for('main.authorize'))
 
 		# if request.form.get('top') is not None and request.form.get('bottom') is not None:
@@ -131,8 +133,8 @@ def tidal_auth_post():
 
 	if request.method == "POST":
 		
-		current_app.config['username'] = request.form['username']
-		current_app.config['password'] = request.form['password']
+		# current_app.config['username'] = request.form['username']
+		# current_app.config['password'] = request.form['password']
 		session['username'] = request.form['username']
 		session['password'] = request.form['password']
 		print(current_app.config)
@@ -158,7 +160,7 @@ def callback():
 	post_request = requests.post(SPOTIFY_TOKEN_URL, data=code_payload, headers=headers, verify = True)
 	response_data = json.loads(post_request.text)
 	access_token = response_data["access_token"]
-	current_app.config['auth'] = access_token
+	session['auth'] = access_token
 
 	return redirect(url_for("main.final"))
    
@@ -174,13 +176,13 @@ def progress():
   # if formboy.bottom == 'spotify':
   #   return Response(mySpotify.spotify_playlist(formboy.auth, formboy.top ,formboy.url), mimetype= 'text/event-stream')
 
-	if current_app.config['bottom'] == 'spotify':
-		return Response(app.mySpotify.spotify_playlist(current_app.config['auth'], current_app.config['top'] ,current_app.config['url']), mimetype= 'text/event-stream')
+	if session['bottom'] == 'spotify':
+		return Response(app.mySpotify.spotify_playlist(session['auth'], session['top'] ,session['url']), mimetype= 'text/event-stream')
 
   # if formboy.bottom == 'tidal':
   #   return Response(tidapi.dict_to_tidal(formboy.username, formboy.password, formboy.url, formboy.top), mimetype= 'text/event-stream')
 
-	if current_app.config['bottom'] == 'tidal':
+	if session['bottom'] == 'tidal':
 		return Response(app.tidapi.dict_to_tidal(session['username'], session['password'], session['url'], session['top']), mimetype= 'text/event-stream')
 
   # if formboy.bottom == 'youtub':
@@ -194,16 +196,16 @@ def progress():
 
   #   return Response(ytcreate.get_playlist_dict(formboy.ytclient, formboy.url, formboy.top), mimetype= 'text/event-stream')
 
-	if current_app.config['bottom'] == 'youtub':
+	if session['bottom'] == 'youtub':
 		try:
 			credentials = google.oauth2.credentials.Credentials(**session['credentials'])
 
 		except: 
 			return render_template('error.html')
 
-	current_app.config['ytclient'] = googleapiclient.discovery.build(API_SERVICE_NAME, YOUTUBE_API_VERSION, credentials=credentials)
+	ytclient = googleapiclient.discovery.build(API_SERVICE_NAME, YOUTUBE_API_VERSION, credentials=credentials)
 
-	return Response(app.ytcreate.get_playlist_dict(current_app.config['ytclient'], current_app.config['url'], current_app.config['top']), mimetype= 'text/event-stream')
+	return Response(app.ytcreate.get_playlist_dict(ytclient, session['url'], session['top']), mimetype= 'text/event-stream')
 
 
 @bp.route('/authorize')

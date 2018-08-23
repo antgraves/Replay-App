@@ -179,4 +179,8 @@ img:not(#replay){
   float: right;
   width: 100%:
 }
+.hide{
+  width:0%;
+  visibility: hidden;
+}
 
