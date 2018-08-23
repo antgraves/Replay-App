@@ -98,7 +98,7 @@ def my_form_post():
 	    #if formboy.bottom == 'youtub':
 			if current_app.config['bottom'] == 'youtub':
 				print('botmam')
-				return redirect(url_for('uthorize'))
+				return redirect(url_for('main.authorize'))
 
 		# if request.form.get('top') is not None and request.form.get('bottom') is not None:
 		# 	print('yaed')
