@@ -57,50 +57,60 @@ def my_form():
 def my_form_post():
 	
 	if request.method == "POST":
-		current_app.config['url'] = request.form['url']
-		session['url'] = request.form['url']
-		print(request.form)
-		print(current_app.config)
-		if request.form.get('top') is not None:
-	      # formboy.top = request.form.get('top')
-			print('yaboi')
-			current_app.config['top'] = request.form.get('top')
-			session['top'] = request.form.get('top')
+		# current_app.config['url'] = request.form['url']
+		# session['url'] = request.form['url']
+		# print(request.form)
+		# print(current_app.config)
+		# if request.form.get('top') is not None:
+	 #      # formboy.top = request.form.get('top')
+		# 	print('yaboi')
+		# 	current_app.config['top'] = request.form.get('top')
+		# 	session['top'] = request.form.get('top')
 
-		if request.form.get('bottom') is not None:
-	      #formboy.bottom = request.form.get('bottom')
-			print('yabi')
-			current_app.config['bottom'] = request.form.get('bottom')
-			session['bottom'] = request.form.get('bottom')
+		# if request.form.get('bottom') is not None:
+	 #      #formboy.bottom = request.form.get('bottom')
+		# 	print('yabi')
+		# 	current_app.config['bottom'] = request.form.get('bottom')
+		# 	session['bottom'] = request.form.get('bottom')
 	      
-	    # if formboy.bottom == 'spotify':
-		if 'bottom' in current_app.config:
-			print('tom')
+	 #    # if formboy.bottom == 'spotify':
 		# if 'bottom' in current_app.config:
-			if current_app.config['bottom'] == 'spotify':
-				auth_query_parameters = {
-	   				"response_type": "code",
-	    			"redirect_uri": REDIRECT_URI,
-	    			"scope": SCOPE,
-	    			# "state": STATE,
-	    			"show_dialog": SHOW_DIALOG_str,
-	    			"client_id": current_app.config['CLIENT_ID']}
+		# 	print('tom')
+		# # if 'bottom' in current_app.config:
+		# 	if current_app.config['bottom'] == 'spotify':
+		# 		auth_query_parameters = {
+	 #   				"response_type": "code",
+	 #    			"redirect_uri": REDIRECT_URI,
+	 #    			"scope": SCOPE,
+	 #    			# "state": STATE,
+	 #    			"show_dialog": SHOW_DIALOG_str,
+	 #    			"client_id": current_app.config['CLIENT_ID']}
 
-				url_args = "&".join(["{}={}".format(key,urllib.parse.quote(val)) for key,val in auth_query_parameters.items()])
-				auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
-				return redirect(auth_url)
+		# 		url_args = "&".join(["{}={}".format(key,urllib.parse.quote(val)) for key,val in auth_query_parameters.items()])
+		# 		auth_url = "{}/?{}".format(SPOTIFY_AUTH_URL, url_args)
+		# 		return redirect(auth_url)
 
-	    # if formboy.bottom == 'tidal':
-			if current_app.config['bottom'] == 'tidal':
-				print('btom')
-				return redirect(url_for('main.tidal_auth'))
+	 #    # if formboy.bottom == 'tidal':
+		# 	if current_app.config['bottom'] == 'tidal':
+		# 		print('btom')
+		# 		return redirect(url_for('main.tidal_auth'))
 
-	    #if formboy.bottom == 'youtub':
-			if current_app.config['bottom'] == 'youtub':
-				print('botmam')
-				return redirect('/authorize')
+	 #    #if formboy.bottom == 'youtub':
+		# 	if current_app.config['bottom'] == 'youtub':
+		# 		print('botmam')
+		# 		return redirect('/authorize')
+
+		if request.form.get('top') is not None and request.form.get('bottom') is not None:
+			return redirect(url_for('main.my_form'))
 	
 	return redirect(url_for('main.my_form'))
+
+@bp.route('/auth')
+def direct(top = None, bottom = None):
+	if bottom == 'spotify':
+		return render_template('error.html')
+	else:
+		return render_template('report.html')
 
 @bp.route('/auth')
 def tidal_auth():
