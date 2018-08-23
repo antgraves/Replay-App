@@ -126,7 +126,8 @@ def dict_to_tidal(username, password, url,service):
 		query = trackname + artistname
 		query = query.replace("  "," ")
 		retquery = artistname + ' - ' + trackname
-		searches = session.search('track', query, limit = 3)
+		# searches = session.search('track', query, limit = 3)
+		searches = session.search('track', query)
 		miss = True
 		# print(query)
 		# print()
@@ -142,7 +143,8 @@ def dict_to_tidal(username, password, url,service):
 
 		else:
 			if '-' in trackname:
-				searches = session.search('track', trackname[:trackname.find('-')] + artistname, limit = 3)
+				# searches = session.search('track', trackname[:trackname.find('-')] + artistname, limit = 3)
+				searches = session.search('track', trackname[:trackname.find('-')] + artistname)
 				for stuff in searches.tracks:
 					if stuff.artist.name.lower() == artistname.lower():
 						idlist.append(str(stuff.id))
@@ -165,7 +167,8 @@ def dict_to_tidal(username, password, url,service):
 					sectrack = removeBrack(trackname)
 				secquery = sectrack + secartist
 				secquery = secquery.replace("  "," ")
-				searchsec = session.search('track', secquery , limit = 3)
+				# searchsec = session.search('track', secquery , limit = 3)
+				searches = session.search('track', trackname[:trackname.find('-')] + artistname)
 
 				for stuff in searchsec.tracks:
 
@@ -177,7 +180,8 @@ def dict_to_tidal(username, password, url,service):
 				trackname = uncensor(trackname)
 				query = trackname + artistname
 				query = query.replace("  "," ")
-				searches = session.search('track', query, limit = 3)
+				# searches = session.search('track', query, limit = 3)
+				searches = session.search('track', query)
 				for stuff in searches.tracks:
 					if stuff.artist.name.lower() == artistname.lower():
 						idlist.append(str(stuff.id))
