@@ -122,8 +122,8 @@ def direct():
 @bp.route('/auth')
 def tidal_auth():
 	print(current_app.config)
-	return redirect(url_for('main.direct')
-	# return render_template('tidal.html')
+	# return redirect(url_for('main.direct')
+	return render_template('tidal.html')
 
 @bp.route('/auth', methods=['GET','POST'])
 def tidal_auth_post():
