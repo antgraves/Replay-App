@@ -168,7 +168,7 @@ def dict_to_tidal(username, password, url,service):
 				secquery = sectrack + secartist
 				secquery = secquery.replace("  "," ")
 				# searchsec = session.search('track', secquery , limit = 3)
-				searches = session.search('track', trackname[:trackname.find('-')] + artistname)
+				searchsec = session.search('track', secquery )
 
 				for stuff in searchsec.tracks:
 
