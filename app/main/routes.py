@@ -126,13 +126,15 @@ def tidal_auth():
 	# return redirect(url_for('main.direct')
 	return render_template('tidal.html')
 
-@bp.route('/auth', methods=['GET','POST'])
+@bp.route('/auth', methods=['POST'])
 def tidal_auth_post():
 
 	if request.method == "POST":
 		
 		current_app.config['username'] = request.form['username']
 		current_app.config['password'] = request.form['password']
+		session['username'] = request.form['username']
+		session['password'] = request.form['password']
 		print(current_app.config)
 		return redirect(url_for('main.final'))
 
@@ -164,7 +166,7 @@ def callback():
 def final():
   #return render_template('ind.html', bottom = formboy.bottom, top = formboy.top)
 	print(session)
-	return render_template('ind.html', bottom = current_app.config['bottom'], top = current_app.config['top'])
+	return render_template('ind.html', bottom = session['bottom'], top = session['top'])
 
 @bp.route('/progress')
 def progress():
@@ -179,7 +181,7 @@ def progress():
   #   return Response(tidapi.dict_to_tidal(formboy.username, formboy.password, formboy.url, formboy.top), mimetype= 'text/event-stream')
 
 	if current_app.config['bottom'] == 'tidal':
-		return Response(app.tidapi.dict_to_tidal(current_app.config['username'], current_app.config['password'], current_app.config['url'], current_app.config['top']), mimetype= 'text/event-stream')
+		return Response(app.tidapi.dict_to_tidal(session['username'], session['password'], session['url'], session['top']), mimetype= 'text/event-stream')
 
   # if formboy.bottom == 'youtub':
   #   try:
