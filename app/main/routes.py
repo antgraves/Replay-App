@@ -98,7 +98,7 @@ def my_form_post():
 	    #if formboy.bottom == 'youtub':
 			if current_app.config['bottom'] == 'youtub':
 				print('botmam')
-				return redirect('/authorize')
+				return redirect(url_for('uthorize'))
 
 		# if request.form.get('top') is not None and request.form.get('bottom') is not None:
 		# 	print('yaed')
@@ -121,7 +121,7 @@ def direct():
 
 @bp.route('/auth')
 def tidal_auth():
-	print(current_app.config)
+	print(session)
 	# return redirect(url_for('main.direct')
 	return render_template('tidal.html')
 
@@ -162,7 +162,7 @@ def callback():
 @bp.route('/complete')
 def final():
   #return render_template('ind.html', bottom = formboy.bottom, top = formboy.top)
-	print(current_app.config)
+	print(session)
 	return render_template('ind.html', bottom = current_app.config['bottom'], top = current_app.config['top'])
 
 @bp.route('/progress')
@@ -243,12 +243,13 @@ def oauth2callback():
 	
 	# try:
 	print('there')
-	print(current_app.config)
+	print(session)
+	print(authorization_response)
 	flow.fetch_token(authorization_response=authorization_response)
 		
 	# except:
 	print('here')
-	print(current_app.config)
+	print(session)
 	# return render_template('error.html')
 
 	
