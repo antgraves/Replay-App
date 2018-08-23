@@ -46,7 +46,7 @@ SHOW_DIALOG_str = "true"
 
 
 
-# os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 @bp.route('/')
 def my_form():
@@ -223,15 +223,15 @@ def oauth2callback():
 # Use the authorization server's response to fetch the OAuth 2.0 tokens.
 	authorization_response = request.url
 	
-	try:
-		print('there')
-		print(current_app.config)
-		flow.fetch_token(authorization_response=authorization_response)
+	# try:
+	print('there')
+	print(current_app.config)
+	flow.fetch_token(authorization_response=authorization_response)
 		
-	except:
-		print('here')
-		print(current_app.config)
-		return render_template('error.html')
+	# except:
+	print('here')
+	print(current_app.config)
+	# return render_template('error.html')
 
 	
   
