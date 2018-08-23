@@ -1,9 +1,6 @@
 import tidalapi
-import time
 from app.credentials import Credentials
-# import spotcrawl
-# import appcrawl
-start_time = time.time()
+
 
 
 
