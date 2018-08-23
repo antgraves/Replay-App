@@ -50,7 +50,7 @@ os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
 
 @bp.route('/')
 def my_form():
-	
+	session.clear()
 	return render_template("test.html")
 
 @bp.route('/', methods=['POST'])
