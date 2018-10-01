@@ -18,10 +18,6 @@ SCOPES = ['https://www.googleapis.com/auth/youtube']
 API_SERVICE_NAME = 'youtube'
 API_VERSION = 'v3'
 
-# def get_authenticated_service():
-#   flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRETS_FILE, SCOPES)
-#   credentials = flow.run_console()
-#   return build(API_SERVICE_NAME, API_VERSION, credentials = credentials)
 
 def remove_empty_kwargs(**kwargs):
   good_kwargs = {}
@@ -68,14 +64,13 @@ def build_resource(properties):
         # For example, the property is "snippet.description", and the resource
         # already has a "snippet" object.
         ref = ref[key]
-  # print(resource)
+  
   return resource
 
 def playlist_items_insert(client, properties, **kwargs):
-  # See full sample for function
+  
   resource = build_resource(properties)
 
-  # See full sample for function
   kwargs = remove_empty_kwargs(**kwargs)
 
   response = client.playlistItems().insert(
@@ -83,51 +78,7 @@ def playlist_items_insert(client, properties, **kwargs):
     **kwargs
   ).execute()
 
-
-    
-# def add_playlist(youtube, pl):
-  
-#   body = dict(
-#     snippet=dict(
-#       title=pl['Name'],
-#       description=pl['Description']
-#     ),
-#     status=dict(
-#       privacyStatus='public'
-#     ) 
-#   ) 
-    
-#   playlists_insert_response = youtube.playlists().insert(
-#     part='snippet,status',
-#     body=body
-#   ).execute()
-
-#   yield "data:75\n\n"
-#   idlength = len(pl['IDs'])
-#   for item in pl['IDs']:
-#     playlist_items_insert(youtube,{'snippet.playlistId': playlists_insert_response['id'],
-#          'snippet.resourceId.kind': 'youtube#video',
-#          'snippet.resourceId.videoId': item,
-#          'snippet.position': ''},
-#         part='snippet',
-#         onBehalfOfContentOwner='')
-
-#     exactpercent = ((25) / idlength) + exactpercent
-#     displaypercent = int(exactpercent)
-#     if displaypercent > 100:
-#       displaypercent = 100
-#     yield "data:" +str(displaypercent) + "\n\n" 
-
-#   yield "data:100\n\n"
-
-#   return playlists_insert_response['id']
-
-
-
-
-
-def get_playlist_dict(youtube, url, service):
-  
+def get_playlist_dict(youtube, url, service): #generate youtube playlist
   
   apple = service == 'apple'
   tidal = service == 'tidal'
@@ -138,7 +89,7 @@ def get_playlist_dict(youtube, url, service):
     try:
       retdict = app.appcrawl.get_artists_tracks(url)
     except:
-      yield "data:ERROR\n\n"
+      yield "data:ERROR\n\n" #yield error, stop program, user imput wrong URL
       return None
 
   elif tidal:
@@ -146,7 +97,7 @@ def get_playlist_dict(youtube, url, service):
     try:
       retdict = app.tidapi.tidal_to_dict(url)
     except:
-      yield "data:ERROR\n\n"
+      yield "data:ERROR\n\n" #yield error, stop program, user imput wrong URL
       return None
 
   elif spotify:
@@ -154,33 +105,29 @@ def get_playlist_dict(youtube, url, service):
     try:
       retdict = app.spotifyapi.get_artists_tracks(url)
     except:
-      yield "data:ERROR\n\n"
+      yield "data:ERROR\n\n" #yield error, stop program, user imput wrong URL
       return None
 
   else:
-    yield "data:ERROR\n\n"
+    yield "data:ERROR\n\n" #yield error, stop program, something wrong on my end
     return None
 
-  yield "data:20\n\n"
+  yield "data:20\n\n" #about 20% done
   retdict['IDs'] = []
-  # retdict = {'Name' : searchdict['Name'], 'Description' : searchdict['Description'], 'IDs' : [] , "Images" : searchdict['Images']}
   displaypercent = 20
   exactpercent = 20.0
   length = len(retdict['Tracks'])
   
-  for item in retdict['Tracks']:
+  for item in retdict['Tracks']: #get video ids
     artistname = item[(item.find('|Artist|:') + 10):item.find(' |URL|:')]
     trackname = item[(item.find('|Track|:') + 9):item.find(' |Artist|:')] 
     query = trackname + " " + artistname 
     
-    #query = item[(item.find('|Track|:') + 9):item.find('|Artist|:')] + item[(item.find('|Artist|:') + 10):]
+    
     payload = {'type': 'video', 'q': (query +' ' + 'video')  ,'key' : 'AIzaSyCzW8ySMW-rvjItMk9s-RbIk4p2DeGZooU','maxResults': 1 , 'part' : 'snippet' }
-    r = requests.get('https://www.googleapis.com/youtube/v3/search', params = payload )
-    # print('we here')
-    # print()
-    # print(r.json())
+    r = requests.get('https://www.googleapis.com/youtube/v3/search', params = payload ) #perform search
 
-    if len(r.json()['items']) > 0:
+    if len(r.json()['items']) > 0: #check if video exists
       retdict['IDs'].append(r.json()['items'][0]['id']['videoId'])
       yield "data:SONG" + artistname + " - " + trackname + "\n\n"
     else:
@@ -189,10 +136,9 @@ def get_playlist_dict(youtube, url, service):
     exactpercent = ((50) / length) + exactpercent
     displaypercent = int(exactpercent)
     if displaypercent > 70:
-      displaypercent = 70
+      displaypercent = 70 #70% done
     yield "data:" +str(displaypercent) + "\n\n"
 
-  # add_playlist(youtube, retdict)
   body = dict(
     snippet=dict(
       title=retdict['Name'],
@@ -202,8 +148,9 @@ def get_playlist_dict(youtube, url, service):
       privacyStatus='public'
     ) 
   ) 
+
   colordict = {}
-  for item in retdict['Images']:
+  for item in retdict['Images']: #get average colors of track artwork
     if len(item) > 0:
       yield "data:IMAGE" + item + "\n\n"
       if item in colordict:
@@ -213,23 +160,19 @@ def get_playlist_dict(youtube, url, service):
         colordict[item] = colorstr
         yield "data:COLOR" + colorstr + "\n\n"
 
-
-  #ls = ['[' + str(len(retdict['IDs'])), retdict['IDs'], retdict['Name']]
-
   for item in retdict['IDs']:
     if len(item) > 0:
       yield "data:IDS" + str(item) + "\n\n"
 
   yield "data:NAME" + retdict['Name'] + "\n\n"
 
-  try: 
+  try:  #create playlist
     straa= "";
     playlists_insert_response = youtube.playlists().insert(
       part='snippet,status',
       body=body).execute()
 
-  except HttpError:
-    #print('create error')
+  except HttpError: #app has exceded max playlist number for the day
     yield "data:100\n\n"
     yield "data:YTERROR\n\n"
     return None
@@ -254,13 +197,7 @@ def get_playlist_dict(youtube, url, service):
 
   yield "data:100\n\n"
 
-  # if playlists_insert_response:
-  urlstring = 'https://www.youtube.com/playlist?list=%s' % playlists_insert_response['id']
-  # urlstring = 'sads'
+  urlstring = 'https://www.youtube.com/playlist?list=%s' % playlists_insert_response['id'] #link to playlist
   yield "data:URL" +urlstring + "\n\n"
 
   yield "data:COMPLETE\n\n"
-  # print(playlists_insert_response['id'])
-
-
-

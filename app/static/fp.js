@@ -1,9 +1,9 @@
-   var topbuttons = document.getElementsByClassName('buttonup');
+var topbuttons = document.getElementsByClassName('buttonup');
 var botbuttons = document.getElementsByClassName('buttondown');
-var data = new FormData();
+var data = new FormData(); //form to submit to python file
 var topone;
 var bottomone;
-function buttonpush(id, buttons){
+function buttonpush(id, buttons){ //highlight selected buttons, remove highlight from non-selected buttons
   for (var j = 0; j < 3; j++){
     if(id == buttons[j].id){
 
@@ -35,7 +35,7 @@ function buttonpush(id, buttons){
         document.getElementById('bottom').value =buttons[j].id.substring(0,buttons[j].id.length - 1) ; 
         
       }
-      // alert("I am button " + buttons[j].id)
+    
     }
     
     else{   
@@ -57,7 +57,7 @@ for (var i=0 ; i < botbuttons.length ; i++){
         buttonpush(botbuttons[ind].id,botbuttons);
       };})(i) }
 
-function addSubmit(ev) {
+function addSubmit(ev) { //don't submit form if error in user input
 
   var errpresent = errCheck();
   
@@ -65,29 +65,13 @@ function addSubmit(ev) {
       ev.preventDefault();
   document.getElementById('error').innerHTML = errpresent;
   }
-   
-      // var request = new XMLHttpRequest();
-      // // request.addEventListener('load', consolee);
-      // request.open('POST', url);
-      // sd = new FormData(this);
-      // sd.set("top", topone);
-      // sd.set("bottom", bottomone);
-      // request.send(sd);
-      // request.send(data);
-      // console.log('submitted');
     }
-
-function addShow() {
-    }
-    function consolee() {
-      console.log("clicked");
-    }
-     
-    var form = document.getElementById('form');
+ 
+  var form = document.getElementById('form');
     
-    form.addEventListener('submit', addSubmit);
+  form.addEventListener('submit', addSubmit); //on form submission
 
-function errCheck(){
+function errCheck(){ //check for errors in user submission
   
   var url = document.getElementById("url").value;
   var retstring = compErrCheck(url);

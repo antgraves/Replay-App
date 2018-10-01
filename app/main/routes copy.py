@@ -205,7 +205,7 @@ def report():
 		email = request.form.get('bug')
 		import yagmail
 		yag = yagmail.SMTP(current_app.config['MAIL_USERNAME'], current_app.config['MAIL_PASSWORD'])
-		yag.send(to = "antgraves23@gmail.com", subject = "error report", contents = email)
+		yag.send(to = "your-email@email.com", subject = "error report", contents = email)
 		return redirect(url_for('main.thanks'))
 	return render_template('report.html')
 

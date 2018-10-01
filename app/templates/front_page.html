@@ -1,19 +1,4 @@
-<!-- <iframe width="560" height="315" src="https://youtu.be/DzwkcbTQ7ZE" frameborder="0" allowfullscreen></iframe>
 
-<iframe width="560" height="315" src="https://www.ssl.youtube.com/embed/oGpFcHTxjZs?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-<div class="frame"><iframe allowfullscreen src="https://directlyrics-net.global.ssl.fastly.net/yt.html#id=2CHdfTVYdv0&origin=https://www.directlyrics.com?autoplay=1" frameborder="0" class="youtube player show"></iframe>
-
-<iframe width="560" height="315" src="http://www.youtube.com/embed/tvTRZJ-4EyI" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/oGpFcHTxjZs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/pk8k7_-Ffv0?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-
-<iframe id="ytapiplayer" frameborder="0" allowfullscreen="1" allow="autoplay; encrypted-media" title="YouTube video player" width="640" height="390" src="https://www.youtube.com/embed/tvTRZJ-4EyI?enablejsapi=1&origin=http%3A%2F%2Fwww.yvoschaap.com&widgetid=1"></iframe>
-
-<iframe width="300" height="200" src="www.youtube.com/embed/tvTRZJ-4EyI?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
- -->
 <!DOCTYPE html>
 <html>
 {% extends "head.html" %}
@@ -73,18 +58,13 @@
 <br>
 <br><div id = "disclaimer">
                   *At the moment, Replay does not allow for playlist conversion to Apple Music.</div>
-<!-- <script type=text/javascript>
-  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-</script>
-<script type=text/javascript src="{{
-  url_for('static', filename='jquery.js') }}"></script> -->
   
   <script type="text/javascript">
   	var url = {{ url_for('main.my_form_post')|tojson }};
   </script>
 
 
-<script src={{ url_for('static', filename='test.js') }}></script>
+<script src={{ url_for('static', filename='fp.js') }}></script>
 {% endblock %}
 </html>
 

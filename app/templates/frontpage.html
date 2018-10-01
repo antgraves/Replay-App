@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+{% extends "head.html" %}
+{% block content %}
+
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/front.css') }}">
+<link href="https://fonts.googleapis.com/css?family=Andika|Athiti" rel="stylesheet">
+<head></head>
+<div id = "pls" >
+   <span id = "welcome">  Welcome to Replay!</span> <br><span id = 'hereyou'>Here you can transfer playlists among popular streaming services. </span> </div>
+  <br>
+<p class = "instruct">
+  First, please select the origin of the playlist:  </p>
+     </div>
+<form action="" method="POST" id = "form">
+    <div class = "clearfix">
+      <div class = "butgroup">
+        <button class = "buttonup" id = "spotify" type = "button" name = "spotify"> <img src = "{{url_for('static', filename='spotlogo.png')}}" id = "spotlogo"> </button> 
+      </div>
+      <div class = "butgroup">
+          <button class = "buttonup" id = "apple" type = "button" name = "apple"> <img src = "{{url_for('static', filename='apple-music.png')}}" id = "spotlogo"> </button>
+        </div>
+        <div class = "butgroup">
+      <button class = "buttonup" id = "tidal"type = "button"name = "tidal"> <img src = "{{url_for('static', filename='tidal.png')}}" id = "spotlogo"></button> 
+        </div>
+    </div>
+    <br> 
+    <div id = "urltext"><p class = "instruct">Enter the playlist url here:</p> 
+    <input class = "input" type="text" name="url" id = 'url'></div>
+    <p>
+    <div class = 'error' id = 'error'></div></p>
+    
+    <br>
+  <p id = "outputtext" class = "instruct">Select the destination of the playlist:</p>
+  <div class = "clearfix">
+    <div class = "butgroup">
+      <button class = "buttondown" id = "spotify2"type = "button" > <img src = "{{url_for('static', filename='spotlogo.png')}}" ></button> 
+    </div>
+    <div class = "butgroup">
+        <button class = "buttondown" id = "youtube" type = "button"> <img src = "{{url_for('static', filename='youtube.png')}}" id = "spotlogo"> </button>
+    </div>
+    <div class = "butgroup">
+    <button class = "buttondown" id = "tidal2" type = "button"> <img src = "{{url_for('static', filename='tidal.png')}}" > </button> 
+    </div>
+    </div>
+    <br><br>
+    <div class = "bottom">
+        <input type = "submit" class = "submit" id = "submit" value = "Submit">  
+        <span id = "youwill"> &nbsp; &nbsp; &nbsp; You will be redirected to a login page. </span>
+        <input class = "hide" type="text" name="top" id='top'>
+     <input class = "hide" type="text" name="bottom" id='bottom'>
+
+    </div>
+
+    </form>
+    <br>
+<br>
+<br>
+<br>
+<br><div id = "disclaimer">
+                  *At the moment, Replay does not allow for playlist conversion to Apple Music.</div>
+                  
+<!-- <script type=text/javascript>
+  $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+</script>
+<script type=text/javascript src="{{
+  url_for('static', filename='jquery.js') }}"></script> -->
+  
+  <script type="text/javascript">
+    var url = {{ url_for('my_form_post')|tojson }};
+  </script>
+
+<script src={{ url_for('static', filename='test.js') }}></script> 
+{% endblock %}
+</html>

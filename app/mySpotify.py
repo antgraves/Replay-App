@@ -5,7 +5,7 @@ import app.spotifyapi
 
 from bs4 import BeautifulSoup
 
-def removeParen(s):
+def removeParen(s): #remove parentheses in song name to optimize search
 	if '(' not in s or ')' not in s:
 		return s
 	if s.find("(") > s.rfind(')'):
@@ -18,7 +18,7 @@ def removeParen(s):
 	sub = begin + final
 	return removeParen(sub)
 
-def removeBrack(s):
+def removeBrack(s): #remove brackets in song name to optimize search
 	if '[' not in s or ']' not in s:
 		return s
 	if s.find("[") > s.rfind(']'):
@@ -32,17 +32,17 @@ def removeBrack(s):
 	return removeParen(sub)
 
 
-def spotify_playlist(token, service, url):
+def spotify_playlist(token, service, url): #generate new spotify playlist; yield info to update progress bar
 	
 	apple = service == 'apple'
 	tidal = service == 'tidal'
 
-	if apple:
+	if apple: 
 		import app.appcrawl
-		try:
-			indict = app.appcrawl.get_artists_tracks(url)
+		try: #get dictionary of songs from Apple playlist
+			indict = app.appcrawl.get_artists_tracks(url) 
 		except:
-			yield "data:ERROR\n\n"
+			yield "data:ERROR\n\n" #yield error, stop program, user imput wrong URL
 			return None
 
 	elif tidal:
@@ -50,15 +50,15 @@ def spotify_playlist(token, service, url):
 		try:
 			indict = app.tidapi.tidal_to_dict(url)
 		except:
-			yield "data:ERROR\n\n"
+			yield "data:ERROR\n\n" #yield error, stop program, user input wrong URL
 			return None
 	
 	else:
-		yield "data:ERROR\n\n"
+		yield "data:ERROR\n\n" #yield error, stop program, something went wrong on my end
 		return None
 	yield "data: 10\n\n"
 
-	spotifyObject = Spotify(auth = token)
+	spotifyObject = Spotify(auth = token) #use token to validate responses
 	user = spotifyObject.current_user()
 	userid = user['id']
 
@@ -69,30 +69,30 @@ def spotify_playlist(token, service, url):
 	headers = {'Authorization': 'Bearer {0}'.format(token)}
 	headers['Content-Type'] = 'application/json'
 	data = {'name': name, 'public': 'True', 'description': description}
-	r = spotifyObject._internal_call('POST',"users/%s/playlists" % userid, data, None)
+	r = spotifyObject._internal_call('POST',"users/%s/playlists" % userid, data, None) #create playlist
 
-	plid = r['id']
+	plid = r['id'] #playlist ID
 	misses = []
 	yield "data: 15\n\n"
 
-	displaypercent = 15
-	exactpercent = 15.0
+	displaypercent = 15 #approximately 15% done with program at this point
+	exactpercent = 15.0 
 	length = len(indict['Tracks'])
 
-	for i in range(length // 100 + 1):
+	for i in range(length // 100 + 1): #continuously call search function of API to find corresponding songs
 		firstls = []
 
-		for item in indict['Tracks'][(100 * i): ((i + 1) * 100)]:
+		for item in indict['Tracks'][(100 * i): ((i + 1) * 100)]: #create proper string to search
 			searchsec = ""
 			artistname = item[(item.find('|Artist|:') + 10):item.find(' |URL|:')]
 			trackname = item[(item.find('|Track|:') + 9):item.find('|Artist|:')] 
 			query = trackname + artistname
 			query = query.replace("  "," ")
 			retquery = artistname + ' - ' + trackname
-			searchprim = spotifyObject.search(query, type = "track" , limit = 2)
+			searchprim = spotifyObject.search(query, type = "track" , limit = 2) #search object
 
 			addbool = False
-			for thing in searchprim['tracks']['items']:
+			for thing in searchprim['tracks']['items']: #parse search object to find track
 				
 				for stuff in thing['artists']:
 
@@ -104,7 +104,7 @@ def spotify_playlist(token, service, url):
 				if addbool:
 					break
 
-			if not addbool and (" & " in artistname or ("(" in trackname and ")" in trackname)):
+			if not addbool and (" & " in artistname or ("(" in trackname and ")" in trackname)): #try again but with different query
 
 				secartist = artistname
 				sectrack = trackname
@@ -121,7 +121,7 @@ def spotify_playlist(token, service, url):
 				secquery = secquery.replace("  "," ")
 				searchsec = spotifyObject.search(secquery, type = "track" , limit = 2)
 
-				for thing in searchsec['tracks']['items']:
+				for thing in searchsec['tracks']['items']: #try again but with different query
 					addbool = False
 
 					for stuff in thing['artists']:
@@ -135,7 +135,7 @@ def spotify_playlist(token, service, url):
 					if addbool:
 						break
 
-			if not addbool and apple:
+			if not addbool and apple: #try again but with different query, search using album name
 				url = item[(item.find(' |URL|:') + 7):]
 				albumpage = requests.get(url)
 				albumhtml = BeautifulSoup(albumpage.text, 'html.parser')
@@ -159,7 +159,7 @@ def spotify_playlist(token, service, url):
 					if addbool:
 						break
 
-			if not addbool and apple and (" & " in artistname or ("(" in trackname and ")" in trackname)):
+			if not addbool and apple and (" & " in artistname or ("(" in trackname and ")" in trackname)): #try again but with different query, search using album name
 				url = item[(item.find(' |URL|:') + 7):]
 				albumpage = requests.get(url)
 				albumhtml = BeautifulSoup(albumpage.text, 'html.parser')
@@ -184,7 +184,7 @@ def spotify_playlist(token, service, url):
 					if addbool:
 						break
 
-			if not addbool and tidal:
+			if not addbool and tidal: #try again but with different query
 
 				album = item[(item.find(' |URL|: ') + 7):]
 				query = trackname + artistname + " " + album
@@ -204,7 +204,7 @@ def spotify_playlist(token, service, url):
 					if addbool:
 						break
 
-			if not addbool and tidal and (" & " in artistname or ("(" in trackname and ")" in trackname)):
+			if not addbool and tidal and (" & " in artistname or ("(" in trackname and ")" in trackname)): #try again but with different query
 				album = item[(item.find(' |URL|: ') + 7):]
 				secquery = sectrack + secartist + " " + album
 				secquery = secquery.replace("  "," ")
@@ -223,20 +223,20 @@ def spotify_playlist(token, service, url):
 					if addbool:
 						break
 
-			if not addbool:
+			if not addbool: #if no search attempts worked, add song to list of missed songs
 				misses.append(retquery)
 
 			exactpercent = ((65) / length) + exactpercent
 			displaypercent = int(exactpercent)
-			if displaypercent > 80:
+			if displaypercent > 80: #about 80% done here
 				displaypercent = 80
 			yield "data:" +str(displaypercent) + "\n\n"
 
-		if firstls:
+		if firstls: #make list of lists, each sublist is up to 100 tracks (Spotify only allows 100 at a time)
 			idlist.append(firstls)
 
 	idlength = len(idlist)
-	for item in idlist:
+	for item in idlist: #add songs to playlist
 		spotifyObject.user_playlist_add_tracks(userid, plid, item)
 
 		exactpercent = ((20) / idlength) + exactpercent
@@ -247,8 +247,8 @@ def spotify_playlist(token, service, url):
 		
 	yield "data:100\n\n"
 
-	urlstring = 'https://open.spotify.com/user/%s/playlist/%s' % (userid, str(plid))
-	# print(misses)
+	urlstring = 'https://open.spotify.com/user/%s/playlist/%s' % (userid, str(plid))  #link to playlist
+	
 	yield "data:URL"+urlstring+"\n\n"
 
 	for item in misses:
@@ -257,9 +257,3 @@ def spotify_playlist(token, service, url):
 	yield "data:NAME"+name+"\n\n"
 	
 	yield "data:COMPLETE\n\n"
-
-# print('yae')
-#spotify_playlist('BQBnMi6sRmqpBvGoz9ZwOLt_MLV0vBHLEw4NWN5DhZiGvfCCjadpfeTf3JN1rZ49pQtPb-iq4WY5ya8L1FQQTi5GrBrrela2ONXCWO3he2uOMs8zHXMyCZLGmeKLph7AeEJL0D7mRFkXhznvIAkE8TrRx3nPmj9ZedNN54JQ2YcLtbbIGlYbZEMCDBjVTJcxWSkwBdxOXerHkm8', 'apple', 'https://itunes.apple.com/us/playlist/test/pl.u-06oxpyatJ8ZRd4')
-
-
-

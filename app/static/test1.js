@@ -1,1 +1,0 @@
-var sp = document.getElementById('span');

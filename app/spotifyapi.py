@@ -3,11 +3,11 @@ from spotipy.oauth2 import SpotifyClientCredentials
 from app.credentials import Credentials 
 
 
-def get_user_id(url):
+def get_user_id(url): #gets user id from url
 	end = url[url.find('user/') + 5:]
 	return end[:end.find('/')]
 
-def get_artists_tracks(url):
+def get_artists_tracks(url): #generate dictionary with playlist's name, description, tracks, and artworks
 
 	cred = Credentials()
 	client_id = cred.spotify_client_id
@@ -27,6 +27,5 @@ def get_artists_tracks(url):
 		
 	return returndict
 
-# print(get_artists_tracks('https://open.spotify.com/user/1230065337/playlist/0SPTEuhdzahoBm7euiqdyw'))
 
 

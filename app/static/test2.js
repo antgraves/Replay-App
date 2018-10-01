@@ -1,1 +1,0 @@
-sp.innerHTML = "WE made It"
