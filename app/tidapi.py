@@ -30,43 +30,19 @@ def removeBrack(s): #remove brackets to optimize search
 	sub = begin + final
 	return removeParen(sub)
 
-def uncensor(s): 
-	firstind = s.find('*')
-	count = firstind + 1
-	lastind = firstind
-	while True:
-		if count == len(s):
-			lastind = count - 1
-			break
-		if s[count] != '*':
-			lastind = count - 1
-			break
-		count += 1
-
-	if firstind > 0:
-		if s[firstind - 1].lower() == 'n':
-			return s[:firstind] + 'igga' + s[lastind + 1:]
-		if s[firstind - 1].lower() == 's':
-			return s[:firstind] + 'hit' + s[lastind + 1:]
-		if s[firstind - 1].lower() == 'f':
-			return s[:firstind] + 'uck' + s[lastind + 1:]
-		if s[firstind - 1].lower() == 'h':
-			return s[:firstind] + 'oe' + s[lastind + 1:]
-		if s[firstind - 1].lower() == 'b':
-			return s[:firstind] + 'itch' + s[lastind + 1:]
 
 def urlsplit(url):
 	urllist = url.split('/')
 	return urllist[4]
 
-def playlist_to_favs(playid, favs, session):
+def playlist_to_favs(playid, favs, session): #add entire playlist to user's favorite tracks
 	for track in reversed(session.get_playlist_tracks(playid)):
 		favs.add_track(track.id)
 
-def track_to_favs(trackid, favs):
+def track_to_favs(trackid, favs): #add single track to user's favorite tracks
 	favs.add_track(trackid)
 
-def tidal_to_dict(url):
+def tidal_to_dict(url): #generate a dictionary of artists, tracks, and images given a Tidal url
 	cred = Credentials()
 	session = tidalapi.Session()
 	plid = urlsplit(url)
@@ -82,7 +58,7 @@ def tidal_to_dict(url):
 	return(retdict)
 	
 
-def dict_to_tidal(username, password, url,service):
+def dict_to_tidal(username, password, url,service): #take in a dict from another service, add tracks to favorites
 
 	idlist = []
 	misses = []
@@ -107,7 +83,7 @@ def dict_to_tidal(username, password, url,service):
 			return None
 	
 	else:
-		yield "data:ERROR\n\n" #yield error, stop program, something went wrong on my end
+		yield "data:ERROR\n\n" #yield error, stop program, something wrong on my end
 		return None
 
 	session = tidalapi.Session() #create Tidal session
@@ -124,7 +100,6 @@ def dict_to_tidal(username, password, url,service):
 		query = trackname + artistname
 		query = query.replace("  "," ")
 		retquery = artistname + ' - ' + trackname
-		
 		searches = session.search('track', query)
 		miss = True
 		
@@ -138,7 +113,6 @@ def dict_to_tidal(username, password, url,service):
 
 		else: #search again using different queries
 			if '-' in trackname:
-				# searches = session.search('track', trackname[:trackname.find('-')] + artistname, limit = 3)
 				searches = session.search('track', trackname[:trackname.find('-')] + artistname)
 				for stuff in searches.tracks:
 					if stuff.artist.name.lower() == artistname.lower():
@@ -146,6 +120,7 @@ def dict_to_tidal(username, password, url,service):
 						miss = False
 						break
 			if miss and " & " in artistname or ("(" in trackname and ")" in trackname):
+				
 				secartist = artistname
 				sectrack = trackname
 				if " & " in artistname:
@@ -157,9 +132,9 @@ def dict_to_tidal(username, password, url,service):
 					sectrack = removeParen(trackname)
 				if "[" in trackname and "]" in trackname:
 					sectrack = removeBrack(trackname)
-
 				secquery = sectrack + secartist
 				secquery = secquery.replace("  "," ")
+				
 				searchsec = session.search('track', secquery )
 
 				for stuff in searchsec.tracks:
@@ -168,7 +143,6 @@ def dict_to_tidal(username, password, url,service):
 						idlist.append(str(stuff.id))
 						miss = False
 						break
-
 			if '*' in trackname:
 				trackname = uncensor(trackname)
 				query = trackname + artistname
@@ -199,15 +173,14 @@ def dict_to_tidal(username, password, url,service):
 		exactpercent = ((30) / idlength) + exactpercent
 		displaypercent = int(exactpercent)
 		if displaypercent > 100:
-			displaypercent = 100
+			displaypercent = 100 #we're done
 		yield "data:" +str(displaypercent) + "\n\n"	
 
-	yield "data:100\n\n" #we're done
+	yield "data:100\n\n"	
 
 	urlstring = 'https://listen.tidal.com/my-music/tracks' 
 
 	yield "data:URL"+urlstring+"\n\n" #link to URL
-	
 	for item in misses:
 		yield "data:MISS"+item+"\n\n"
 
