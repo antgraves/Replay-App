@@ -124,7 +124,7 @@ def get_playlist_dict(youtube, url, service): #generate youtube playlist
     query = trackname + " " + artistname 
     
     
-    payload = {'type': 'video', 'q': (query +' ' + 'video')  ,'key' : 'AIzaSyCzW8ySMW-rvjItMk9s-RbIk4p2DeGZooU','maxResults': 1 , 'part' : 'snippet' }
+    payload = {'type': 'video', 'q': (query +' ' + 'video')  ,'key' : 'MYAPIKEY','maxResults': 1 , 'part' : 'snippet' }
     r = requests.get('https://www.googleapis.com/youtube/v3/search', params = payload ) #perform search
 
     if len(r.json()['items']) > 0: #check if video exists
